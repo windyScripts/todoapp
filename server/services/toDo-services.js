@@ -1,8 +1,8 @@
-import ToDos from '../models/expenses-model';
+import ToDos from '../models/to-do-item-model.js';
 
-// export const findOne = function(params, values = null, sortParams = null) {
-//   return   ToDos.findOne(params, values, sortParams);
-// };
+export const findOne = function(params, values = null, sortParams = null) {
+  return   ToDos.findOne(params, values, sortParams);
+};
 
 export const findAll = function(findParams, sortParams = null, limit = null) {
   return   ToDos.find(findParams).sort(sortParams).limit(limit);

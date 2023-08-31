@@ -1,14 +1,14 @@
 import {Router} from 'express';
+import {addUser,login} from '../controllers/user-controller.js';
 
 const router = Router();
-const userRoutes = require('../controllers/user-controller');
 
 // new user registration
 
-router.post('/new', userRoutes.addUser);
+router.post('/new', addUser);
 
 // user login
 
-router.post('/login', userRoutes.login);
+router.post('/login', login);
 
-module.exports = router;
+export default router;

@@ -19,4 +19,4 @@ const toDoItemSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('toDoItem', toDoItemSchema);
+export default mongoose.model('toDoItem', toDoItemSchema);

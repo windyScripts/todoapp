@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from'jsonwebtoken';
 
-const User = require('../services/user-services');
+import User from '../services/user-services.js';
 
 exports.authorization = async(req, res, next) => {
   if (req.header('Authorization') === undefined) {

@@ -1,8 +1,7 @@
-
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import User from '../services/user-services';
+import {findOne as findOneUser,create as createUser} from '../services/user-services.js';
 
 function generateAccessToken(id) {
   const iat = new Date;
@@ -18,10 +17,10 @@ function invalid(...params) {
 
 // New user registration
 
-exports.addUser = async (req, res) => {
+export const addUser = async (req, res) => {
   try {
     const checkInvalid = invalid(req.body.userName, req.body.email, req.body.password);
-    const existingUser = Boolean(await User.findOne({ email: req.body.email }));
+    const existingUser = Boolean(await findOneUser({ email: req.body.email }));
     if (checkInvalid === true) {
       return res.status(401).json({ message: 'Invalid details.' });
     } else if (existingUser === true) {
@@ -29,7 +28,7 @@ exports.addUser = async (req, res) => {
     }
     const saltRounds = 10;
     bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
-      const response = await User.create({ name: req.body.userName, email: req.body.email, password: hash });
+      const response = await createUser({ name: req.body.userName, email: req.body.email, password: hash });
       return res.status(200).json(response);
     });
   } catch (err) {
@@ -39,9 +38,9 @@ exports.addUser = async (req, res) => {
 
 // login
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await findOneUser({ email: req.body.email });
     if (user !== null) {
       bcrypt.compare(req.body.password, user.password, (err, result) => {
         if (result === true) {

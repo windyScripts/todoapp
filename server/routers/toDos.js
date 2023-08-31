@@ -1,29 +1,24 @@
-const {Router} = require('express');
-const {TodoRecord} = require('../records/todo.record');
-const {pool} = require('../utils/db');
+import {Router} from 'express';
+import {create, findAll, destroy, save, findOne} from '../services/toDo-services.js';
 
 const TodoRouter = Router();
 
 TodoRouter.get('/', async (req, res) => {
-  const todosList = await TodoRecord.listAll();
-
+  const todosList = await findAll();
   res.send(todosList);
 })
   .post('/create', async (req, res) => {
-    const newTodo = new TodoRecord(req.body);
-    await newTodo.insert();
-
+    await create(req.body);
     res.send('Values inserted successfully');
   })
   .delete('/:id', async (req, res) => {
-    const todo = await TodoRecord.getOne(req.params.id);
-    await todo.delete();
+    const todo = await findOne(req.params.id);
+    await destroy(todo);
   })
   .put('/update/:id', async (req, res) => {
-    const todo = await TodoRecord.getOne(req.params.id);
-    await todo.update(req.body.id, req.body.todo);
+    const todo = await findOne(req.params.id);
+    todo.text = req.body.todo;
+    await save(todo);
   });
 
-module.exports = {
-  TodoRouter,
-};
+export default TodoRouter;
