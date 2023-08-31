@@ -1,0 +1,22 @@
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
+const toDoItemSchema = new Schema({
+  text: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  date: { type: Date,
+    default: Date.now },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+module.exports = mongoose.model('toDoItem', toDoItemSchema);
