@@ -20,15 +20,69 @@ function App() {
     }
   };
 
-  const addTodo = async () => {};
+  const addTodo = async () => {
+    handleCharactersError(todo);
 
-  const getAllTodos = async () => {};
+    try {
+      await axios.post('https://todo-mysql-backend.herokuapp.com/create', {
+        todo,
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
-  const updateTodo = async (id) => {};
+  const getAllTodos = async () => {
+    try {
+      await axios
+        .get('https://todo-mysql-backend.herokuapp.com/')
+        .then((response) => {
+          setTodoList(response.data);
+        });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
-  const deleteTodo = async (id) => {};
+  const updateTodo = async (id) => {
+    handleCharactersError(newTodo);
 
-  const handleSubmit = (event) => {};
+    try {
+      await axios
+        .put(`https://todo-mysql-backend.herokuapp.com/update/${id}`, {
+          id,
+          todo: newTodo,
+        })
+        .then((response) => {
+          console.log(response.data);
+          setTodoList(
+            todoList.map((val) =>
+              val.id === id ? {id: val.id, todo: val.todo} : val
+            )
+          );
+        });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const deleteTodo = async (id) => {
+    try {
+      await axios
+        .delete(`https://todo-mysql-backend.herokuapp.com/${id}`)
+        .then((response) => {
+          setTodoList(todoList.filter((val) => val.id !== id));
+        });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addTodo();
+    setTodo('');
+  };
 
   useEffect(() => {
     getAllTodos();
