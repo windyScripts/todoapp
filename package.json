@@ -7,11 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"node server/server.js\" \"cd client && npm run dev\" ",
     "devstart": "concurrently \"nodemon server/server.js\" \"cd client && npm run dev\" ",
-    "monstart": "nodemon server/server.js"
+    "monstart": "nodemon server/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "Aravind Shenoy",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-plugin-import": "^2.28.1"
   }
 }
