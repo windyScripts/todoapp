@@ -1,0 +1,17 @@
+{
+  "name": "df",
+  "version": "1.0.0",
+  "description": "An app for recording, refining and prioritizing tasks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"node server/server.js\" \"cd client && npm run dev\" ",
+    "devstart": "concurrently \"nodemon server/server.js\" \"cd client && npm run dev\" ",
+    "monstart": "nodemon server/server.js"
+  },
+  "author": "Aravind Shenoy",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
